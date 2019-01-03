@@ -1,5 +1,6 @@
 import React from 'react'
 import * as fiery from 'fiery'
+import { Button } from 'antd'
 
 import { firebase } from '../lib/firebase'
 
@@ -15,9 +16,9 @@ export const AuthRequired = props => (
           ) : (
             <div>
               You must sign in to continue:{' '}
-              <button onClick={authenticateWithGoogle}>
+              <Button onClick={authenticateWithGoogle}>
                 Sign in with Google
-              </button>
+              </Button>
             </div>
           )
       })
