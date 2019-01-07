@@ -1,6 +1,6 @@
 import React from 'react'
 import QrReader from 'react-qr-reader'
-import { Alert, Card } from 'antd'
+import { Card, message } from 'antd'
 
 import { firebase } from './lib/firebase'
 
@@ -11,10 +11,14 @@ export class Main extends React.PureComponent {
     isSuccess: false
   }
 
-  handleScan = data => {
+  handleScan = async data => {
     if (data) {
-      this.setState({ isSuccess: true })
-      dbRef.doc(`${data}`).update({ isCheckedIn: true })
+      try {
+        await dbRef.doc(`${data}`).update({ isCheckedIn: true })
+        message.info('Success!')
+      } catch (err) {
+        message.error('ERROR!')
+      }
     } else {
       console.error('NO DATA EXIST!')
     }
@@ -34,12 +38,6 @@ export class Main extends React.PureComponent {
             onScan={this.handleScan}
             style={{ width: '100%' }}
           />
-          {!this.state.isSuccess && (
-            <Alert message="NO DATA EXIST!" type="error" />
-          )}
-          {this.state.isSuccess && (
-            <Alert message="Check-in complete" type="success" />
-          )}
         </Card>
       </div>
     )
