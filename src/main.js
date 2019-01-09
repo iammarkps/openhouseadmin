@@ -1,45 +1,13 @@
 import React from 'react'
-import QrReader from 'react-qr-reader'
-import { Card, message } from 'antd'
+import { Qr } from './qr'
+import { Register } from './reg'
+import { BrowserRouter as Router, Route } from 'react-router-dom'
 
-import { firebase } from './lib/firebase'
-
-const dbRef = firebase.firestore().collection('registrant')
-
-export class Main extends React.PureComponent {
-  state = {
-    isSuccess: false
-  }
-
-  handleScan = async data => {
-    if (data) {
-      try {
-        await dbRef.doc(`${data}`).update({ isCheckedIn: true })
-        message.info('Success!')
-      } catch (err) {
-        message.error('ERROR!')
-      }
-    } else {
-      console.error('NO DATA EXIST!')
-    }
-  }
-
-  handleError = err => {
-    console.error(err)
-  }
-
-  render() {
-    return (
-      <div>
-        <Card title="Scanner" style={{ width: 300 }}>
-          <QrReader
-            delay={1000}
-            onError={this.handleError}
-            onScan={this.handleScan}
-            style={{ width: '100%' }}
-          />
-        </Card>
-      </div>
-    )
-  }
-}
+export const Main = () => (
+  <Router>
+    <React.Fragment>
+      <Route path="/" exact component={Qr} />
+      <Route path="/reg" component={Register} />
+    </React.Fragment>
+  </Router>
+)
