@@ -39,7 +39,7 @@ export class Qr extends React.PureComponent {
     const { name, lastname, isQROn } = this.state
     return (
       <Row>
-        <Col span={12} offset={6}>
+        <Col xs={{ span: 24, offset: 0 }} md={{ span: 12, offset: 6 }}>
           <Card title="Scanner" style={{ width: '100%' }}>
             {isQROn && (
               <QrReader
