@@ -1,6 +1,6 @@
 import React from 'react'
 import axios from 'axios'
-import { message } from 'antd'
+import { message, Col, Row, Card } from 'antd'
 
 import { firebase } from './lib/firebase'
 
@@ -52,16 +52,16 @@ export class Register extends React.Component {
       await dbRef.doc(`${res.data}`).update({ isCheckedIn: true })
       message.success('Success!')
     } catch (err) {
-      console.error(err)
+      message.error(`Error! : ${err}`)
     }
   }
 
   render() {
     return (
-      <div className="container">
-        <div class="columns is-mobile">
-          <div class="column is-half is-offset-one-quarter">
-            <div className="box">
+      <div>
+        <Row>
+          <Col span={12} offset={6}>
+            <Card>
               <div className="field">
                 <label className="label">Prefix</label>
                 <div className="control">
@@ -111,6 +111,7 @@ export class Register extends React.Component {
                     เด็กหญิง
                   </label>
                 </div>
+                <br />
                 <label className="label">Name</label>
                 <div className="control">
                   <input
@@ -121,6 +122,7 @@ export class Register extends React.Component {
                     onChange={this.handleChange}
                   />
                 </div>
+                <br />
                 <label className="label">Lastname</label>
                 <div className="control">
                   <input
@@ -131,6 +133,7 @@ export class Register extends React.Component {
                     onChange={this.handleChange}
                   />
                 </div>
+                <br />
                 <label className="label">Email</label>
                 <div className="control">
                   <input
@@ -141,13 +144,14 @@ export class Register extends React.Component {
                     onChange={this.handleChange}
                   />
                 </div>
+                <br />
                 <label className="label">Type</label>
                 <div className="control">
                   <label className="radio">
                     <input
                       value="student"
                       type="radio"
-                      name="prefix"
+                      name="type"
                       onChange={this.handleChange}
                     />{' '}
                     นักเรียน
@@ -156,7 +160,7 @@ export class Register extends React.Component {
                     <input
                       value="parent"
                       type="radio"
-                      name="prefix"
+                      name="type"
                       onChange={this.handleChange}
                     />{' '}
                     ผู้ปกครอง
@@ -165,7 +169,7 @@ export class Register extends React.Component {
                     <input
                       value="teacher"
                       type="radio"
-                      name="prefix"
+                      name="type"
                       onChange={this.handleChange}
                     />{' '}
                     ครู/อาจารย์
@@ -174,19 +178,37 @@ export class Register extends React.Component {
                     <input
                       value="others"
                       type="radio"
-                      name="prefix"
+                      name="type"
                       onChange={this.handleChange}
                     />{' '}
                     อื่น ๆ
                   </label>
                 </div>
+                <br />
+                {this.state.type === 'student' && (
+                  <React.Fragment>
+                    <label className="label">Student's Year</label>
+                    <div className="control">
+                      <select name="stdyear" onChange={this.handleChange}>
+                        <option value="p1-3">ประถมศึกษาตอนต้น</option>
+                        <option value="p4-6">ประถมศึกษาตอนปลาย</option>
+                        <option value="m1">มัธยมศึกษาปีที่ 1</option>
+                        <option value="m2">มัธยมศึกษาปีที่ 2</option>
+                        <option value="m3">มัธยมศึกษาปีที่ 3</option>
+                        <option value="highschool">มัธยมศึกษาตอนปลาย</option>
+                        <option value="others">อื่น ๆ</option>
+                      </select>
+                    </div>
+                  </React.Fragment>
+                )}
+                <br />
                 <button className="button" onClick={this.submitToFirebase}>
                   Register
                 </button>
               </div>
-            </div>
-          </div>
-        </div>
+            </Card>
+          </Col>
+        </Row>
       </div>
     )
   }

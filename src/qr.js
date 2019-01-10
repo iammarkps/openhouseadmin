@@ -1,6 +1,6 @@
 import React from 'react'
 import QrReader from 'react-qr-reader'
-import { Card, message, Button } from 'antd'
+import { Card, message, Button, Row, Col } from 'antd'
 
 import { firebase } from './lib/firebase'
 
@@ -38,19 +38,23 @@ export class Qr extends React.PureComponent {
   render() {
     const { name, lastname, isQROn } = this.state
     return (
-      <Card title="Scanner" style={{ width: 300 }}>
-        {isQROn && (
-          <QrReader
-            delay={1000}
-            onError={this.handleError}
-            onScan={this.handleScan}
-            style={{ width: '100%' }}
-          />
-        )}
-        <Button onClick={this.toggleQR}>{isQROn ? 'Close' : 'Open'}</Button>
-        {name && <p>Name : {name}</p>}
-        {lastname && <p>Lastname : {lastname}</p>}
-      </Card>
+      <Row>
+        <Col span={12} offset={6}>
+          <Card title="Scanner" style={{ width: '100%' }}>
+            {isQROn && (
+              <QrReader
+                delay={1000}
+                onError={this.handleError}
+                onScan={this.handleScan}
+                style={{ width: '100%' }}
+              />
+            )}
+            <Button onClick={this.toggleQR}>{isQROn ? 'Close' : 'Open'}</Button>
+            {name && <p>Name : {name}</p>}
+            {lastname && <p>Lastname : {lastname}</p>}
+          </Card>
+        </Col>
+      </Row>
     )
   }
 }
